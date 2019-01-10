@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Recruitment\Tests\Entity;
+
+use PHPUnit\Framework\TestCase;
+use Recruitment\Entity\Product;
+
+class ProductTest extends TestCase
+{
+    /**
+     * @test
+     * @expectedException \Recruitment\Entity\Exception\InvalidUnitPriceException
+     */
+    public function itThrowsExceptionForInvalidUnitPrice(): void
+    {
+        $product = new Product();
+        $product->setUnitPrice(0);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function itThrowsExceptionForInvalidMinimumQuantity(): void
+    {
+        $product = new Product();
+        $product->setMinimumQuantity(0);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function itThrowsExceptionForWrongTax(): void
+    {
+        $product = new Product();
+        $product->setTax(9);
+    }
+
+    /**
+     * @test
+     */
+    public function itProperlySetTax(): void
+    {
+        $product = new Product();
+        $product->setTax(5);
+
+        $this->assertEquals(5, $product->getTax());
+    }
+}
